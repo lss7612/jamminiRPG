@@ -16,7 +16,7 @@ public class Monster extends Species{
 	}
 	
 	public void counterAttack(Species attacker) {
-		if(new Random().nextInt(10) < 3) {
+		if(new Random().nextInt(100) < 30) {
 			attacker.getHit((float) (this.att * 0.7), this);
 		}
 	}
