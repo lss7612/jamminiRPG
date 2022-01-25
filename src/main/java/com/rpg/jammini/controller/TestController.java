@@ -26,7 +26,8 @@ public class TestController {
 	}
 	
 	public static void main(String[] args) {
-		Weapon w = Weapon.IronBow;
+//		Weapon w = Weapon.IronBow;
+		
 	}
 	
 }

@@ -69,6 +69,8 @@ local.properties
 .sts4-cache/
 
 ###BJPARK add (2020 1129)
+.target/
+target/*
 target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 target/m2e-wtp/web-resources/META-INF/maven/a.b/c/pom.properties
 
