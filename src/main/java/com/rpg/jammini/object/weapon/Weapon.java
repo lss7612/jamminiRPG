@@ -1,34 +1,58 @@
 package com.rpg.jammini.object.weapon;
 
+import java.util.Arrays;
+
+import com.rpg.jammini.object.species.Species;
 import com.rpg.jammini.object.species.SpeciesCode;
 
 public enum Weapon {
-	ShortSword(1.05f,1.1f,"휴먼"),
-	LongSword(1.05f,1.1f,"휴먼"),
-	ShortAxe(1.1f,0.95f,"오크"),
-	IronHammer(1.2f,0.95f,"오크"),
-	ShortBow(1f, 1.05f,"엘프"),
-	IronBow(1f, 1.1f,"엘프"),
+	ShortSword("ShortSword",1.05f,1f, SpeciesCode.HUMAN),
+	LongSword("LongSword",1.1f,1f, SpeciesCode.HUMAN),
+	ShortAxe("ShortAxe",1.1f,0.95f, SpeciesCode.OAK),
+	IronHammer("IronHammer",1.2f,0.95f, SpeciesCode.OAK),
+	ShortBow("ShortBow",1f, 1.05f, SpeciesCode.ELF),
+	IronBow("IronBow",1f, 1.1f, SpeciesCode.ELF),
+	NULL("무기없음",1f,1f,SpeciesCode.ELF,SpeciesCode.OAK,SpeciesCode.HUMAN)
 	;
 	
-	Weapon(float att,float dex, String name) {
+	Weapon(String name, float att,float dex, SpeciesCode ...speciesCodes) {
+		this.name = name;
 		this.att = att;
 		this.dex = dex;
-		this.speciesCode = SpeciesCode.nameToCode(name);
+		this.speciesCodes = speciesCodes;
 	}
 	
+	private String name;
 	private float att;
 	private float dex;
-	private SpeciesCode speciesCode;
+	private SpeciesCode[] speciesCodes;
 	
-	
+	public String getName() {
+		return this.name;
+	}
 	public float getAtt() {
 		return this.att;
 	}
 	public float getDex() {
 		return this.dex;
 	}
-	public SpeciesCode getSpeciesCode() {
-		return this.speciesCode;
+	public SpeciesCode[] getSpeciesCode() {
+		return this.speciesCodes;
+	}
+	
+	public boolean isMatch(Species species) {
+		SpeciesCode match =	Arrays.stream(this.speciesCodes).filter(code -> code == species.getSpeciesCode())
+														   .findAny()
+														   .orElse(SpeciesCode.NULL);
+		System.out.println(match);
+		System.out.println(species.getSpeciesCode());
+		return species.getSpeciesCode() == match;
+	}
+	
+	public static Weapon nameToCode(String name) {
+		return Arrays.stream(Weapon.values())
+					 .filter(e -> e.getName().equals(name))
+					 .findAny()
+					 .orElse(NULL);
 	}
 }

@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public enum SpeciesCode {
 	NULL("NULL"),
-	HUMAN("휴먼"),
-	ELF("엘프"),
-	OAK("오크"),
+	HUMAN("HUMAN"),
+	ELF("ELF"),
+	OAK("OAK"),
+	MONSTER("MONSTER"),
 	;
 	
 	SpeciesCode(String name) {

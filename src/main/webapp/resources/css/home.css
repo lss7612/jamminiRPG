@@ -1,0 +1,15 @@
+.wrapper{display: flex; width : 100%; max-heigth:80%;}
+.left{width:70%}
+.right{width:30%}
+.monster_area{width : 100%;}
+.charactor_area{width : 100%;}
+.top{height:58vh}
+.bottom{height:40vh}
+.area {border:1px solid #ccc;}
+.stat {display:inline-block; width : 40%; margin:10% 4%;}
+.charactor {height:inherit; margin:0 auto; display:flex; justify-content: space-between; }
+#img {height: inherit; min-height:300px; width: 32%; border-radius:50%; border: 1px solid #ccc;}
+.skill_hp_mp{height: inherit; min-height:300px; width: 65%; display:flex; flex-direction:column;}
+#hp  div, #mp div {height:inherit}
+.oak_img{background-image : url(../image/오크.png); background-position: center; background-repeat: no-repeat;}
+.hpmp{height : 30px; border: 1px solid #ccc; margin-top :10px;}
