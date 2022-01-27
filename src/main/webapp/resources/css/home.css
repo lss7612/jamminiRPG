@@ -1,3 +1,25 @@
+/* 크롬, 엣지, 파이어폭스 기본 초기화 */
+progress { 
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0;
+  appearance: none; 
+
+  background: #DDDDDD; /* 파이어폭스 기본 배경 설정 */
+}
+/* 엣지, 크롬 기본 배경 설정, 기본 스타일 */
+progress::-webkit-progress-bar {background-color: #DDDDDD; }
+
+/* 크롬, 엣지 value Color */
+progress.mp::-webkit-progress-value { background: blue; }
+progress.hp::-webkit-progress-value { background: red; }
+
+/* 파이어폭스 Value Color */
+progress.mp::-moz-progress-bar { background-color: blue; }
+progress.hp::-moz-progress-bar { background-color: red; }
+
+
 .wrapper{display: flex; width : 100%; max-heigth:80%;}
 .left{width:70%}
 .right{width:30%}
@@ -6,10 +28,26 @@
 .top{height:58vh}
 .bottom{height:40vh}
 .area {border:1px solid #ccc;}
-.stat {display:inline-block; width : 40%; margin:10% 4%;}
+.area {overflow:scroll}
+.stat {display:inline-block; width : 150px; height : 20px; margin:25px 10px; }
 .charactor {height:inherit; margin:0 auto; display:flex; justify-content: space-between; }
 #img {height: inherit; min-height:300px; width: 32%; border-radius:50%; border: 1px solid #ccc;}
 .skill_hp_mp{height: inherit; min-height:300px; width: 65%; display:flex; flex-direction:column;}
 #hp  div, #mp div {height:inherit}
-.oak_img{background-image : url(../image/오크.png); background-position: center; background-repeat: no-repeat;}
-.hpmp{height : 30px; border: 1px solid #ccc; margin-top :10px;}
+.OAK{background-image : url(../image/오크.png); background-position: center; background-repeat: no-repeat;}
+.ELF{background-image : url(../image/엘프.png); background-position: center; background-repeat: no-repeat;}
+.HUMAN{background-image : url(../image/휴먼.png); background-position: center; background-repeat: no-repeat;}
+.MONSTER{background-image : url(../image/슬라임.png); background-position: center; background-repeat: no-repeat;}
+.DIED_MONSTER{background-image : url(../image/죽은슬라임.png); background-position: center; background-repeat: no-repeat;}
+.hpmp{height : 100px;  margin-top :10px; width :100%; display:flex; flex-direction:column; justify-content: space-around; padding 10px;}
+.hpmp progress {height: 30px; 	border-radius:10px; background-color:#3abff7;}
+/* #hp {background-color : #e32b3a;}
+#mp {background : blue;} */
+.skill_hp_mp{padding-right : 10px; display: flex; align-items: center; flex-direction: column; justify-content: space-around;}
+.skill_hp_mp div, .skill_hp_mp progress {width: 100%;}
+.skill_area , .weapon_area{border: 1px solid #ccc; display:flex; justify-content:space-around;}
+.skill {display: inline-block;border: 1px solid #ccc; margin : 10px; padding : 5px; height: 30px; width : 200px; text-align: center;}
+.monster_area {disply: flex; judtify-content:space-around; align-items: center;}
+.clickable {cursor: pointer;}
+.monster_area {display:flex; justify-content: space-around; align-itmes: center;}
+#monster_img {max-width : 500px; min-width : 300px; max-height: 500px; min-height: 300px; border : 1px solid #ccc;}

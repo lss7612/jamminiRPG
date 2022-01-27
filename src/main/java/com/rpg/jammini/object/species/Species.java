@@ -1,5 +1,8 @@
 package com.rpg.jammini.object.species;
 
+import java.util.List;
+import java.util.Random;
+
 import com.rpg.jammini.object.skill.Skill;
 import com.rpg.jammini.object.weapon.Weapon;
 
@@ -7,6 +10,8 @@ import lombok.Data;
 
 @Data
 public abstract class Species {
+	
+	public static final int levelMax = 10;
 	
 	protected float maxHp = 100;
 	protected float maxMp = 100;
@@ -43,90 +48,113 @@ public abstract class Species {
 	/**
 	 * 레벨업
 	 */
-	public void levelUp() {
-		this.maxHp += 5;
-		this.maxMp += 5;
-		this.hp = maxHp;
-		this.mp = maxMp;
-		this.attNm += 1;
-		this.dffNm += 1;
-		this.dexNm += 1;
-		this.avoidRate += 1.2;
-		this.level ++;
-		this.reInit();
+	public void levelUp(List<String> logList) {
+		
+		if(this.level < levelMax) {
+			this.maxHp += 5;
+			this.maxMp += 5;
+			this.hp = maxHp;
+			this.mp = maxMp;
+			this.attNm += 1;
+			this.dffNm += 1;
+			this.dexNm += 1;
+			this.avoidRate *= 0.02;
+			
+			this.level ++;
+			this.reInit();
+			logList.add("레벨업!!");
+		} else {
+			logList.add("더이상 레벨이 오르지 않습니다");
+		}
 	}
 	
 	public void reInit() {
 		this.att = attNm;
 		this.dff = dffNm;
 		this.dex = dexNm;
-		this.setWeapon(this.weapon);
-		this.useSkill(this.active);
+		this.att = attNm * this.weapon.getAtt();
+		this.dex = dexNm * this.weapon.getDex();
+		this.active.useSkill(this);
 	}
 	
 	/**
 	 * 공격함
 	 */
-	public void attack(Monster monster) {
-		if(!monster.isDied()) {
-			monster.getHit(this.att, this);
-		} 
+	public void attack(Species monster, List<String> logList) {
+		if(!monster.died) {
+			logList.add(this.speciesCode + "이(가) 공격합니다");
+			monster.getHit(this.att, this, logList);
+			if(monster.died) {
+				this.levelUp(logList);
+			}
+		} else {
+			logList.add("몬스터가 이미 죽어있습니다.");
+		}
 	}
 
 	/**
 	 * 공격 당함 
 	 */
-	public void getHit(float power) {
-		float damage = power-dff;
-		hp -= damage > 0 ? damage : 0;
+	public void getHit(float power, Species attacker, List<String> logList) {
+		if(new Random().nextInt(100) > (avoidRate)) {
+			logList.add(speciesCode + "이(가) 공격당함!!");
+			float damage = power-dff;
+			hp -= damage > 0 ? damage : 0;
+			if(this.isDied()) {
+				logList.add(this.speciesCode + "사망");
+				this.died = true;
+			}
+				
+		} else {
+			logList.add(this.speciesCode + "은(는) 회피했습니다!!");
+		}
 	}
+	
 	
 	/**
 	 * 무기 장착
 	 */
-	public boolean setWeapon(Weapon weapon) {
+	public void setWeapon(Weapon weapon, List<String> logList) {
 		if(!weapon.isMatch(this)) {
-			System.out.println(weapon + "은 " + this.speciesCode + "용 무기가 아닙니다.");
-			return false;
+			logList.add(weapon + "은 " + this.speciesCode + "용 무기가 아닙니다.");
+		} else {
+			this.weapon = weapon;
+			this.reInit();
+			logList.add(weapon + " 장착 완료");
 		}
-		System.out.println(weapon + " 세팅완료");
-		this.weapon = weapon;
-		this.att = this.attNm * weapon.getAtt();
-		this.dex = this.dexNm * weapon.getDex();
-		return true;
 	}
 	
 	/**
 	 * 무기 해제
 	 */
-	public boolean dropWeapon(Weapon weapon) {
-		this.weapon = null;
-		this.att = this.attNm;
-		System.out.println("무기 뺌");
+	public boolean dropWeapon() {
+		this.weapon = Weapon.NULL;
+		this.reInit();
 		return true;
 	}
 	
 	/**
 	 * 스킬사용
 	 */
-	public boolean useSkill(Skill skill) {
+	public void useSkill(Skill skill, List<String> logList) {
 		if(!skill.isMatchSpecies(this.speciesCode)) {
-			System.out.println(this.speciesCode + "는 " + skill + "을 사용할 수 없습니다.");
-			return false;
+			logList.add(this.speciesCode + "는 " + skill + "을(를)사용할 수 없습니다.");
 		} else if(this.isAnggo(skill)) {
-			System.out.println("MP가 부족합니다.");
-			return false;
+			logList.add("MP가 부족합니다.");
+		} else {
+			this.active = skill;
+			this.mp -= skill.getNeedMp();
+			this.reInit();
+			logList.add(speciesCode + "가 " + skill + "을(를) 사용");
 		}
-		this.active = skill;
-		return skill.useSkill(this);
 	}
 	
 	/**
 	 * 스킬 종료
 	 */
-	public void endSkill() {
+	public void endSkill(List<String> logList) {
+		logList.add(this.active +"스킬이 해제됩니다.");
 		this.active = Skill.NULL;
-		System.out.println("스킬 해제됨");
 		this.reInit();
 	}
 	

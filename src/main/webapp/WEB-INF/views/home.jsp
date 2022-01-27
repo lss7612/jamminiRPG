@@ -17,22 +17,38 @@
 
 	<div class="wrapper">
 		<div class="left">
-			<div class="monster_area area top"></div>
+			<div class="monster_area area top">
+				<div class="monster" onclick="attack()">
+					<div id="monster_img">
+					</div>
+					<div class="hpmp">
+						<div class="hp_area">
+							hp
+							<progress id="monster_hp" class="hp" low="20" hight="80"></progress>
+						</div>
+					</div>
+					attack cooltime<br>
+					<progress id="attack_cooltime"></progress>
+				</div>
+				<button id="createMon" onclick="makeNewCharactor('MONSTER')" style="display:none;">새 몬스터 생성</button>
+			</div>
 			<div class="charactor_area area bottom">
 				<div class="charactor">
-					<div id="img" class="oak_img"></div>
+					<div id="img"></div>
 					<div class="skill_hp_mp">
 						<div class="hpmp">
-							<div id="hpMax">
-								<div id="hp"></div>
+							<div class="hp_area">
+								hp
+								<progress id="hp" class="hp" low="20" high="80">hp</progress>
 							</div>
-							<div id="mpMax">
-								<div id="mp"></div>
+							<div class="mp_area">
+								mp
+								<progress id="mp" class="mp" low="20" high="80">mp</progress>
 							</div>
 						</div>
 						<div class="skill_area">
-							<div class="skill" id="skill1"></div>
-							<div class="skill" id="skill2"></div>
+						</div>
+						<div class="weapon_area">
 						</div>
 					</div>
 				</div>
@@ -42,6 +58,9 @@
 			<div class="log_area area top">
 			</div>
 			<div class="stat_area area bottom">
+				<div class="stat">
+					레벨 : <span id="level"></span>
+				</div>
 				<div class="stat">
 					공격력 : <span id="att"></span>
 				</div>
@@ -59,6 +78,7 @@
 				</div>
 				<div class="stat">
 					스킬 : <span id="skill"></span>
+					<progress id="skillCnt" style="display:none;"></progress>
 				</div>
 			</div>
 		</div>

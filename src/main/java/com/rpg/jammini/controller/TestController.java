@@ -1,6 +1,7 @@
 package com.rpg.jammini.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,15 @@ public class TestController {
 	
 	public static void main(String[] args) {
 		
-		String str = "{\"maxHp\":100,\"maxMp\":100,\"hp\":100,\"mp\":100,\"attNm\":10,\"dffNm\":5,\"dexNm\":5,\"att\":10,\"dff\":5,\"dex\":5,\"avoidRate\":0.1,\"level\":1,\"speciesCode\":\"HUMAN\",\"weapon\":\"NULL\",\"active\":\"NULL\",\"died\":false}";
-		Human result = new Gson().fromJson(str, Human.class);
-		System.out.println(result);
-
+		List<Weapon> list = Weapon.getSpeciesWeapon(SpeciesCode.HUMAN);
+		for(Weapon w : list) {
+			System.out.println(w);
+		}
+		
+		List<Skill> s_list = Skill.getSpeciesSkill(SpeciesCode.HUMAN);
+		for(Skill s : s_list) {
+			System.out.println(s);
+		}
 		
 	}
 	

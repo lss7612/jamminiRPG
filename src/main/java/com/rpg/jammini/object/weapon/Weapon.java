@@ -1,6 +1,8 @@
 package com.rpg.jammini.object.weapon;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.rpg.jammini.object.species.Species;
 import com.rpg.jammini.object.species.SpeciesCode;
@@ -54,5 +56,14 @@ public enum Weapon {
 					 .filter(e -> e.getName().equals(name))
 					 .findAny()
 					 .orElse(NULL);
+	}
+	
+	public static List<Weapon> getSpeciesWeapon(SpeciesCode species) {
+		return Arrays.stream(Weapon.values())
+					 .filter(w-> {
+						 return Arrays.stream(w.speciesCodes).anyMatch(code->code==species);
+					 })
+					 .filter(weapon->weapon!=NULL)
+					 .collect(Collectors.toList());
 	}
 }

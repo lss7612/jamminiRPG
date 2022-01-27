@@ -1,6 +1,8 @@
 package com.rpg.jammini.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +41,6 @@ public class GameController {
 		}
 	}
 	
-//	private Monster makeMonsterNow(String monsterJson) {
-//		return new Gson().fromJson(monsterJson, Monster.class);
-//	}
 	
 	@GetMapping("/getCharactor")
 	@ResponseBody
@@ -53,10 +52,10 @@ public class GameController {
 			result.put("result", new Human());
 			break;
 		case OAK:
-			result.put("result", new Elf());
+			result.put("result", new Oak());
 			break;
 		case ELF:
-			result.put("result", new Oak());
+			result.put("result", new Elf());
 			break;
 		case MONSTER:
 			result.put("result", new Monster());
@@ -77,10 +76,13 @@ public class GameController {
 		System.out.println("무기장착");
 		Map<String, Object> result = new HashMap<>();
 		
+		List<String> logList = new ArrayList<>();
+		
 		Species charactor = makeCharactorNow(name, charactorJson);
-		charactor.setWeapon(Weapon.nameToCode(weapon));
+		charactor.setWeapon(Weapon.nameToCode(weapon), logList);
 		
 		result.put("charactor", charactor);
+		result.put("logList", logList);
 		
 		return result;
 	}
@@ -96,14 +98,16 @@ public class GameController {
 		
 		System.out.println("공격");
 		Map<String, Object> result = new HashMap<>();
+		List<String> logList = new ArrayList<>();
 		
 		Species charactor = makeCharactorNow(name, charactorJson);
-		Monster monster = (Monster) makeCharactorNow("MONSTER",monsterJson);
+		Species monster = makeCharactorNow("MONSTER",monsterJson);
 		
-		charactor.attack(monster);
+		charactor.attack(monster, logList);
 		
 		result.put("charactor", charactor);
 		result.put("monster", monster);
+		result.put("logList", logList);
 		
 		return result;
 		
@@ -115,12 +119,14 @@ public class GameController {
 		
 		System.out.println("스킬 사용");
 		Map<String,Object> result = new HashMap<>();
+		List<String> logList = new ArrayList<>();
 		
 		Species charactor = makeCharactorNow(name, charactorJson);
 		Skill skillCode = Skill.nameToCode(skill);
-		charactor.useSkill(skillCode);
+		charactor.useSkill(skillCode, logList);
 		
 		result.put("charactor", charactor);
+		result.put("logList", logList);
 		
 		return result;
 		
@@ -130,13 +136,54 @@ public class GameController {
 	@ResponseBody
 	public Map<String, Object> endSkill(String name, String charactorJson) {
 		
-		System.out.println("스킬 사용");
 		Map<String,Object> result = new HashMap<>();
+		List<String> logList = new ArrayList<>();
 		
 		Species charactor = makeCharactorNow(name, charactorJson);
-		charactor.endSkill();
+		charactor.endSkill(logList);
 		
 		result.put("charactor", charactor);
+		result.put("logList", logList);
+		
+		return result;
+		
+	}
+	
+	@GetMapping("/getWeapons")
+	@ResponseBody
+	public Map<String, Object> getSpeciesWeapon(String name){
+		
+		Map<String, Object> result = new HashMap<>();
+		SpeciesCode code = SpeciesCode.nameToCode(name);
+		
+		List<Weapon> weapons = Weapon.getSpeciesWeapon(code);
+		result.put("weapons", weapons);
+		
+		return result;
+		
+	}
+	
+	@GetMapping("/getSkills")
+	@ResponseBody
+	public Map<String, Object> getSpeciesSkill(String name, int level) {
+		
+		Map<String, Object> result = new HashMap<>();
+		SpeciesCode code = SpeciesCode.nameToCode(name);
+		
+		List<Skill> skills = Skill.getSpeciesSkill(code);
+		List<Integer> durations= new ArrayList<>();
+		for(Skill skill : skills) {
+			durations.add(skill.getDuration());
+		}
+		List<Integer> levels = new ArrayList<>();
+		for(Skill skill : skills) {
+			levels.add(skill.getLevel());
+		}
+		
+		
+		result.put("skills", skills);
+		result.put("durations", durations);
+		result.put("levels", levels);
 		
 		return result;
 		
