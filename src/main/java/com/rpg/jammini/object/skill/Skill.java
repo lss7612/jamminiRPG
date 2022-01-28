@@ -97,7 +97,7 @@ public enum Skill {
 			species.setDff(species.getDff() * 1.3f);
 			break;	
 		case Elusion:
-			species.setAvoidRate(species.getAvoidRateNm() * 1.3f);
+			species.setAvoidRate(species.getAvoidRate() * 1.3f);
 			break;	
 		case Anger:
 			species.setAtt(species.getAtt() * 1.5f);
