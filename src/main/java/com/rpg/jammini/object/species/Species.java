@@ -18,11 +18,11 @@ public abstract class Species {
 	protected float hp = 100;
 	protected float mp = 100;
 	protected float attNm = 10;
-	protected float dffNm = 5;
-	protected float dexNm = 5;
+	protected float dffNm = 1;
+	protected float dexNm = 1;
 	protected float att = 10;
-	protected float dff = 5;
-	protected float dex = 5;
+	protected float dff = 1;
+	protected float dex = 1;
 	protected float avoidRate = 0.1f;
 	protected int level = 1;
 	protected boolean died = false;
@@ -56,8 +56,8 @@ public abstract class Species {
 			this.hp = maxHp;
 			this.mp = maxMp;
 			this.attNm += 1;
-			this.dffNm += 1;
-			this.dexNm += 1;
+			this.dffNm += 0.5;
+			this.dexNm += 0.5;
 			this.avoidRate *= 0.02;
 			
 			this.level ++;

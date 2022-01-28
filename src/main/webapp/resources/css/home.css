@@ -39,6 +39,7 @@ progress.hp::-moz-progress-bar { background-color: red; }
 .HUMAN{background-image : url(../image/휴먼.png); background-position: center; background-repeat: no-repeat;}
 .MONSTER{background-image : url(../image/슬라임.png); background-position: center; background-repeat: no-repeat;}
 .DIED_MONSTER{background-image : url(../image/죽은슬라임.png); background-position: center; background-repeat: no-repeat;}
+.MONSTER{cursor:url('../image/gam224.cur'),pointer;}
 .hpmp{height : 100px;  margin-top :10px; width :100%; display:flex; flex-direction:column; justify-content: space-around; padding 10px;}
 .hpmp progress {height: 30px; 	border-radius:10px; background-color:#3abff7;}
 /* #hp {background-color : #e32b3a;}

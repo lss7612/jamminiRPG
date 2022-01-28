@@ -13,7 +13,7 @@ public class Elf extends Species{
 			
 		super.levelUp(logList);
 		if(this.level < levelMax) {
-			this.dexNm += 1;
+			this.dexNm += 0.5;
 			this.reInit();
 		} 
 		

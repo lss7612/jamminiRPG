@@ -13,7 +13,7 @@ public class Oak extends Species{
 			
 		super.levelUp(logList);
 		if(this.level < levelMax) {
-			this.attNm += 1;
+			this.attNm += 0.5;
 			this.reInit();
 		} 
 		

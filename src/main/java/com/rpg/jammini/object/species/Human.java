@@ -24,7 +24,7 @@ public class Human extends Species{
 			
 		super.levelUp(logList);
 		if(this.level < levelMax) {
-			this.dffNm += 1;
+			this.dffNm += 0.5;
 			this.reInit();
 		} 
 		

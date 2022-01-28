@@ -16,7 +16,7 @@ function makeNewCharactor(name){
 		data : {name : name},
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			if(name!="MONSTER") {
 				setCharactor(res.result);
 			} else {
@@ -41,7 +41,7 @@ function setWeapon(weapon) {
 		data : obj,
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			setCharactor(res.charactor);
 //			setMonster(res.monster);
 		},
@@ -53,7 +53,7 @@ function setWeapon(weapon) {
 
 function attack() {
 	if(attackCnt > 0) {
-		logInterCeptor({
+		logInterceptor({
 			logList : ['아직 공격하지 못합니다.']
 		});
 		return;
@@ -70,12 +70,12 @@ function attack() {
 		},
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			setCharactor(res.charactor);
 			console.log('dexNm',res.dexNm,'dex',dex);
 			setMonster(res.monster);
 			let att_cool = document.getElementById('attack_cooltime');
-			attackCnt = att_cool.max = 10 / res.charactor.dex;
+			attackCnt = att_cool.max = 3 / res.charactor.dex;
 			
 			attackInterval = setInterval(() => {
 				attackCnt -= 0.1;
@@ -152,7 +152,7 @@ function endSkill(){
 		},
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			setCharactor(res.charactor);
 		},
 		error : function(){
@@ -172,7 +172,7 @@ function getSpeciesWeapon(){
 		},
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			let dom = document.getElementsByClassName('weapon_area')[0]
 			dom.innerHTML='weapon';
 			res.weapons.forEach(item => {
@@ -197,7 +197,7 @@ function getSpeciesSkill(){
 		},
 		success : function(res){
 			console.debug(res);
-			logInterCeptor(res);
+			logInterceptor(res);
 			let dom = document.getElementsByClassName('skill_area')[0];
 			dom.innerHTML='skill';
 			res.skills.forEach((item, idx) => {
@@ -242,7 +242,7 @@ function setCharactor(cha) {
 }
 
 
-function logInterCeptor(obj){
+function logInterceptor(obj){
 	if(obj.logList == undefined) return;
 	
 	let logs = obj.logList;
