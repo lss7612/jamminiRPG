@@ -20,6 +20,7 @@ public abstract class Species {
 	protected float attNm = 10;
 	protected float dffNm = 1;
 	protected float dexNm = 1;
+	protected float avoidRateNm = 0.1f;
 	protected float att = 10;
 	protected float dff = 1;
 	protected float dex = 1;
@@ -55,10 +56,10 @@ public abstract class Species {
 			this.maxMp += 5;
 			this.hp = maxHp;
 			this.mp = maxMp;
-			this.attNm += 1;
+			this.attNm += 0.5;
 			this.dffNm += 0.5;
 			this.dexNm += 0.5;
-			this.avoidRate *= 0.02;
+			this.avoidRateNm *= 1.05;
 			
 			this.level ++;
 			this.reInit();
@@ -66,12 +67,14 @@ public abstract class Species {
 		} else {
 			logList.add("더이상 레벨이 오르지 않습니다");
 		}
+		
 	}
 	
 	public void reInit() {
 		this.att = attNm;
 		this.dff = dffNm;
 		this.dex = dexNm;
+		this.avoidRate = avoidRateNm;
 		this.att = attNm * this.weapon.getAtt();
 		this.dex = dexNm * this.weapon.getDex();
 		this.active.useSkill(this);
