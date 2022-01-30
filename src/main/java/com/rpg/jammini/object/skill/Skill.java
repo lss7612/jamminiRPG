@@ -109,6 +109,9 @@ public enum Skill {
 		case Frenzy:
 			species.setAtt(species.getAtt() * 5);
 			break;
+		case Invisible:
+			species.setAvoidRate(1);
+			break;
 		default:
 			break;
 		}

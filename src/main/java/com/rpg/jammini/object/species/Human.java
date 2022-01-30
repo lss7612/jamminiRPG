@@ -11,15 +11,6 @@ public class Human extends Species{
 	}
 	
 	@Override
-	public void getHit(float power, Species attacker, List<String> logList) {
-		if(this.active == Skill.Invisible) {
-			logList.add(this.active +"스킬을 사용중이므로 맞지 않습니다.");
-		} else {
-			super.getHit(power,attacker, logList);
-		}
-	}
-	
-	@Override
 	public void levelUp(List<String> logList) {
 			
 		super.levelUp(logList);
