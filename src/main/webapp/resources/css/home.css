@@ -19,6 +19,29 @@ progress.hp::-webkit-progress-value { background: red; }
 progress.mp::-moz-progress-bar { background-color: blue; }
 progress.hp::-moz-progress-bar { background-color: red; }
 
+#gameInitializer{
+	position : absolute;
+	width : 100vw;
+	height : 100vh;
+	z-index : 1000;
+	background-color:white;
+}
+#selectSpecies {
+	display:flex;
+	justify-content : space-around;
+	align-items : center;
+	width : inherit;
+	height : inherit;
+}
+
+#selectSpecies div{
+	border : 1px solid #ccc;
+	flex-direction : row;
+	width : 350px;
+	height : 350px;
+	cursor : pointer;
+}
+
 
 .wrapper{display: flex; width : 100%; max-heigth:80%;}
 .left{width:70%}

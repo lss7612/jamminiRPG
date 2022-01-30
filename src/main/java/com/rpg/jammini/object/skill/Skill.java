@@ -103,11 +103,15 @@ public enum Skill {
 			species.setAtt(species.getAtt() * 1.5f);
 			species.setDff(species.getDff() * 0.9f);
 			break;	
+		case Rapid:
+			species.setDex(species.getDex() * 5);
+			break;
+		case Frenzy:
+			species.setAtt(species.getAtt() * 5);
+			break;
 		default:
 			break;
 		}
-		System.out.println(this + " SKILL 사용");
-		
 		return true;
 	}
 	

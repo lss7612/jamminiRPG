@@ -14,7 +14,14 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css">
 </head>
 <body>
-
+	<div id="gameInitializer">
+		<h1>종족선택</h1>
+		<div id="selectSpecies">
+			<div class="OAK selectSpecies" value="OAK"></div>
+			<div class="ELF selectSpecies" value="ELF"></div>
+			<div class="HUMAN selectSpecies" value="HUMAN"></div>
+		</div>
+	</div>
 	<div class="wrapper">
 		<div class="left">
 			<div class="monster_area area top">

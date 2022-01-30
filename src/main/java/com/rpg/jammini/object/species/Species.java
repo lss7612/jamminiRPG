@@ -30,6 +30,7 @@ public abstract class Species {
 	protected SpeciesCode speciesCode;
 	protected Weapon weapon = Weapon.NULL;
 	protected Skill active = Skill.NULL;
+	protected boolean attAvailable = true;
 	
 	
 	/**
@@ -84,22 +85,51 @@ public abstract class Species {
 	 * 공격함
 	 */
 	public void attack(Species monster, List<String> logList) {
+		if(!attAvailable) {
+			logList.add("아직 공격할 수 없습니다");
+			return;
+		}
+		
 		if(!monster.died) {
+			this.attAvailable = false;
 			logList.add(this.speciesCode + "이(가) 공격합니다");
 			monster.getHit(this.att, this, logList);
-			if(monster.died) {
-				this.levelUp(logList);
-			}
+			if(monster.died) this.levelUp(logList);
+			
+			Thread attAvailable = new attAvailableThread(this, 3 / this.dex);
+			attAvailable.start();
 		} else {
 			logList.add("몬스터가 이미 죽어있습니다.");
 		}
 	}
 
+	private class attAvailableThread extends Thread{
+		
+		Species species;
+		float time;
+		
+		attAvailableThread(Species species, float time) {
+			this.species = species;
+			this.time = time;
+		}
+		
+		@Override
+		public void run() {
+			try {
+				Thread.sleep((long) (this.time * 1000));
+				species.setAttAvailable(true);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	/**
 	 * 공격 당함 
 	 */
 	public void getHit(float power, Species attacker, List<String> logList) {
-		if(new Random().nextInt(100) > (avoidRate)) {
+		if(new Random().nextInt(100) > (this.avoidRate * 100)) {
 			logList.add(speciesCode + "이(가) 공격당함!!");
 			float damage = power-dff;
 			hp -= damage > 0 ? damage : 0;
@@ -144,6 +174,8 @@ public abstract class Species {
 			logList.add(this.speciesCode + "는 " + skill + "을(를)사용할 수 없습니다.");
 		} else if(this.isAnggo(skill)) {
 			logList.add("MP가 부족합니다.");
+		} else if(skill.getLevel() > this.level) {
+			logList.add(skill + "은 레벨" + skill.getLevel() + " 부터 사용 가능합니다.");
 		} else {
 			this.active = skill;
 			this.mp -= skill.getNeedMp();

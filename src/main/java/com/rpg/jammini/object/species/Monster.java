@@ -3,6 +3,9 @@ package com.rpg.jammini.object.species;
 import java.util.List;
 import java.util.Random;
 
+import lombok.Data;
+
+@Data
 public class Monster extends Species{
 	
 	protected float counterRate = 30;

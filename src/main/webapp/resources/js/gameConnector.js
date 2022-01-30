@@ -69,10 +69,9 @@ function attack() {
 			monsterJson : JSON.stringify(monster),
 		},
 		success : function(res){
-			console.debug(res);
 			logInterceptor(res);
 			setCharactor(res.charactor);
-			console.log('dexNm',res.dexNm,'dex',dex);
+			
 			setMonster(res.monster);
 			let att_cool = document.getElementById('attack_cooltime');
 			attackCnt = att_cool.max = 3 / res.charactor.dex;
@@ -80,7 +79,10 @@ function attack() {
 			attackInterval = setInterval(() => {
 				attackCnt -= 0.1;
 				att_cool.value = attackCnt;
-				if(attackCnt <= 0) clearInterval(attackInterval);
+				if(attackCnt <= 0) {
+					clearInterval(attackInterval);
+					charactor.attAvailable = true;
+				}
 			}, 100);
 			
 		},
